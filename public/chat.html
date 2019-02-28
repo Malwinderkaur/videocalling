@@ -1,0 +1,84 @@
+<html>
+
+<head>
+    <title>Video chat</title>
+    <!-- TODO: use prod versions of third party libs -->
+    <script src="/js/lib/vue.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/lib/jquery-3.3.1.js"></script>
+    <script src="/js/lib/axios.min.js"></script>
+
+    <link rel="stylesheet" href="/css/bootstrap.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark mb-4">
+        <a class="navbar-brand" href="#">Expert Chat</a>
+      </nav>
+    <div id="app" class="container">
+        <div v-show="!loggedin">
+            <div class="row m-1">
+                <div class="offset-md-4 col-md-4">
+                    <input type="text" v-model="email" placeholder="email" class="form-control">
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="offset-md-4 col-md-4">
+                    <input type="password" v-model="password" placeholder="Password" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-danger" style="margin-top:10px" role="alert" v-show="errMessage">
+                        {{errMessage}}
+                    </div>
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-md-4 offset-md-4 text-center">
+                    <button v-on:click="login" class="btn btn-primary">Login</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div v-show="loggedin">
+            <div class="row">
+                <div class="col">
+                    <video id="webrtc-remotevid" autoplay controls style="border: 1px solid rgb(231, 225, 225);" width="480" height="270">
+                            Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="col">
+                    <canvas id="canvas" style="border: 1px solid rgb(231, 225, 225);" width="480" height="270"></canvas>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-primary" style="margin-top:10px" role="alert" v-show="message">
+                        {{message}}
+                    </div>
+                </div>
+            </div>
+            <div class="m-1" id="buttons">
+                    <button type="button" v-on:click="acceptCall" class="btn btn-success" v-show="call.incoming">Accept</button>
+                    <button type="button" v-on:click="declineCall" class="btn btn-danger" v-show="call.incoming">Decline</button>
+                    <button type="button" v-on:click="endCall" class="btn btn-danger" v-show="call.inprogress">End Call</button>
+                    <button type="button" v-on:click="takePicture" class="btn btn-primary" v-show="call.inprogress">Take Picture</button>
+                    <button type="button" v-on:click="clearCanvas" class="btn btn-warning" v-show="call.telestration">Clear</button>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+    <script src="/js/client.js"></script>
+    <script src="/js/telestration.js"></script>
+</body>
+
+</html>
